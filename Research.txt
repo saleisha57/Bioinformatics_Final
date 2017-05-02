@@ -1,3 +1,5 @@
+
+
 Research Data for Project:
 
 -Thebaine(morphine precursor) produced after E coli has been modified.
@@ -16,3 +18,14 @@ Research Data for Project:
 -Ethical issues with easy production from E coli(Some believe that the difficulty to work with E coli will, in a sense, scare people away from producing in wild amounts).
 	-Given that a person has a certain sstrain of yeast, they can produce morphine precursors from home.
 	-Relatively easy access to make Thebaine.
+
+Tools of pathway reconstruction and production of economically  relevant plant secondary metabolites in recombinant  microorganisms (in library database)
+
+http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0050008 (recent pathway of E.coli, with complete pathways used)
+
+https://networkx.readthedocs.io/en/stable/examples/drawing/labels_and_colors.html (network x graphing examples for labelling nodes)
+
+http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0050008#s4 (review of transcription networks)
+
+http://www.cell.com/cell/pdf/S0092-8674(15)00431-6.pdf (another transcription network review)
+
