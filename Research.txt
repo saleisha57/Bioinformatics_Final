@@ -1,1 +1,9 @@
-Research Information for Final Project
+Research Data for Project:
+
+-Thebaine(morphine precursor) produced after E coli has been modified.
+-E coli and yeast process produces opiate akaloids from sugar.
+	-Process takes less than a week as oposed to the method from poppy sap which takes around a year.
+	-Four strains of E coli required(Genetically modified).
+		-Added genes from other bacteria(Coptis japonica and Arabidopsis).
+			-This allowed the production of hydrocodone.
+	-Modifications to E coli will allow for cheaper and easier production of pain fighting substances. 
