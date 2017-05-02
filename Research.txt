@@ -11,3 +11,7 @@ Research Data for Project:
 -Ethical issues with easy production from E coli.
 	-Given that a person has a certain sstrain of yeast, they can produce morphine precursors from home.
 	-Relatively easy access to make Thebaine.
+
+-E coli in biotechnology (As a adaptive host)
+	-Manipulation of the E coli bacteria to produce insulin(First useful application).
+	-Have been used to produce vaccines, and immobilised enzymes(Several other uses not necessarily related to biological points).
