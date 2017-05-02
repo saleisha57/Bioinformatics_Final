@@ -7,3 +7,7 @@ Research Data for Project:
 		-Added genes from other bacteria(Coptis japonica and Arabidopsis).
 			-This allowed the production of hydrocodone.
 	-Modifications to E coli will allow for cheaper and easier production of pain fighting substances. 
+
+-Ethical issues with easy production from E coli.
+	-Given that a person has a certain sstrain of yeast, they can produce morphine precursors from home.
+	-Relatively easy access to make Thebaine.
