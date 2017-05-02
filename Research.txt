@@ -8,10 +8,11 @@ Research Data for Project:
 			-This allowed the production of hydrocodone.
 	-Modifications to E coli will allow for cheaper and easier production of pain fighting substances. 
 
--Ethical issues with easy production from E coli.
-	-Given that a person has a certain sstrain of yeast, they can produce morphine precursors from home.
-	-Relatively easy access to make Thebaine.
-
 -E coli in biotechnology (As a adaptive host)
 	-Manipulation of the E coli bacteria to produce insulin(First useful application).
+	-Manipulation of E coli to produce opioids, and precursors
 	-Have been used to produce vaccines, and immobilised enzymes(Several other uses not necessarily related to biological points).
+
+-Ethical issues with easy production from E coli(Some believe that the difficulty to work with E coli will, in a sense, scare people away from producing in wild amounts).
+	-Given that a person has a certain sstrain of yeast, they can produce morphine precursors from home.
+	-Relatively easy access to make Thebaine.
