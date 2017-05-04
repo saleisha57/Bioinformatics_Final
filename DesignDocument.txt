@@ -1,0 +1,22 @@
+Description/Requirements: Creating a program that will determine the interactions of certain nodes(chemicals) based on what they are connected to. Creating edges based on user input.
+			  Need to run tests to ensure that the program will properly iterate through list/dictionary.
+
+Initialize()
+1) Sets the conditions.
+2) Call Get_Nodes().
+
+
+Get_Nodes()
+1) Sets up the nodes for the graph.
+2) Returns.(Possibly)
+
+
+Tables()
+1) Set up the truth tables for the nodes. (Dictionary or list)
+2) Returns. (Maybe)
+
+
+Run_Sim()
+1) Set up and run the simulation.
+2) Update any changes.
+3) Call necessary functions.
