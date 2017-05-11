@@ -3,8 +3,11 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 #making demo from review article, boolean type
-
+#storage stuff
+current_state = {}
+past_states =[]
 #works
+
 def get_nodes():
     number_nodes = 0
     nodes_initial = {}
@@ -101,9 +104,40 @@ def cut_logic(logic_statement):
     #truth tables
     #truth table breakdown
 
-def sigma_function_new_value(ar, ag, nodes, key_with_partners):
-    placeholder=0
+#need model current state dictinonary:  key=node name, value stored is 1 or 0 of current generational truth state
+def retreive_model_value(key):
+    return current_state[key]
 
+#does a signma update scheme
+def sigma_function_new_value(ar, ag, nodes, key_with_partners, value_old):
+    sum_val = 0
+    for thing in key_with_partners:
+        if thing[len(thing) - 1:len(thing)] == '+':
+            sum_val = sum_val + ag * retreive_model_value(thing[0:len(thing) -1])
+        else:
+            sum_val = sum_val + ar * retreive_model_value(thing[0:len(thing) - 1])
+    if sum_val > 0:
+        return_val = 1
+    else if sum_val < 0:
+        return_val = 0
+    else:
+        return_val = value_old
+    return return_val
+
+#runs a single generation update
+def run_a_generation_sigma(ar, ag, nodes, key_with_partners):
+    past_states.append(current_state)
+    current_value_store = 0
+    #now update
+    for thing in nodes:
+        current_value_store = current_state[thing]
+        current_state[thing] = sigma_function_new_value(ar, ag, nodes, key_with_partners, current_value_store)
+
+def run_set_number_generations_sigma(number, ar, ag, nodes, key_with_partners, intial_values):
+    current_state = initial_values
+    for i in range(number):
+        run_a_generation_sigma(ar, ag, nodes, key_with_partners)
+    #need output stuff
 
 
 #takes input of graph
@@ -112,6 +146,13 @@ def draw_the_graph(y):
         pos = nx.circular_layout(y)
         colors = [y[u][v]['color'] for u,v in edges]
         nx.draw(y, pos, edges=edges, edge_color=colors, with_labels = True)
+
+def open_old_model(name):
+    full_name = name + '.txt'
+    x = open(full_name)
+    x_in = x.read()
+    x_in_split = [s.strip() for s in x_in.splitlines()]
+
 
 #a = get_nodes()
 #b = get_edges(a)
@@ -129,7 +170,6 @@ draw_the_graph(y)
 #nx.draw(y, pos, labels, font_size=16)
 
 plt.show()
-print a
 print 'truth tables', make_truth_tables(a)
 #nx.draw(graph_attempt)
 #plt.show()
