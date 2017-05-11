@@ -1,0 +1,14 @@
+a b c d e
+aedgesout
+bedgesout
+cedgesout
+dedgesout
+eedgesout
+anodesin
+bnodesin
+cnodesin
+dnodesin
+eedgesin
+sigma
+ag 2
+ar 3
