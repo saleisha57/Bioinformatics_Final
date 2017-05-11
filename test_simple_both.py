@@ -9,20 +9,37 @@ import itertools
 #maybe a 'model type' variable for truth table vs. sigma type update schemes
 current_state = {}
 past_states = {}
+#list of node_names, in alphabetical order.  Store all in alphabetical order for generation values
+node_names = []
+#nodes as keys, edges as list elements
+nodes = {}
+#constants for sigma function updating
+ar = 0
+ag = 0
+#stores a node as a key, with all nodes which have edges which connect to that node and their interactions in a list
+key_with_partners = {}
+
 
 #MODEL ENTRY functions
 #node entry, user input of all node names
 def get_nodes():
+    names_store = []
+    global node_names
     nodes_initial = {}
     nodes = input("enter number nodes: ")
     for i in range(nodes):
         name = raw_input('enter node name:' )
         print name
+        names_store.append(name)
         nodes_initial[name] = []
+    names_store.sort()
+    node_names = names_store
     return nodes_initial
 
 #added directions (inhibition, not inhibition) based on +/- on back as can only do -> and not -| edges wtih networkx
-def get_edges(nodes_initial):
+def get_edges():
+    nodes_initial = get_nodes()
+    global nodes
     for key in nodes_initial:
         buddies = []
         #print key
@@ -34,11 +51,12 @@ def get_edges(nodes_initial):
             hold_friend = hold_friend + hold_direction
             buddies.append(hold_friend)
         nodes_initial[key] = buddies
-
+    nodes = nodes_initial
 
 #INITIAL SET UP FUNCTIONS
 #makes a di_graph
-def translate_to_graph(nodes):
+def translate_to_graph():
+    global nodes
     graph = nx.DiGraph()
     hold_keys = []
     number_edges_out = 0
@@ -54,8 +72,12 @@ def translate_to_graph(nodes):
     return graph
 
 #PUT TRUTH TABLE MAKING HERE
+
+
 #find all the nodes which point to a given node, saves interaction type
-def find_all_nodes_with_point_to_a_node(nodes, search_node):
+def find_all_nodes_with_point_to_a_node(search_node):
+    global nodes
+    global key_with_partners
     give_back_list_friends=[]
     #print search_node
     for thing in nodes:
@@ -64,14 +86,18 @@ def find_all_nodes_with_point_to_a_node(nodes, search_node):
             #print 'in second for', thing_2
             if search_node == thing_2[0:len(thing_2) - 1]:
                 give_back_list_friends.append(thing + thing_2[len(thing_2)-1:len(thing_2)])
-    return give_back_list_friends
+    key_with_partners = give_back_list_friends
 
 def retreive_model_value(key):
     return current_state[key]
 
 #does a signma update scheme
-def sigma_function_new_value(ar, ag, nodes, key_with_partners, value_old):
+def sigma_function_new_value(value_old):
     sum_val = 0
+    global ar
+    global ag
+    global nodes
+    global key_with_partners
     for thing in key_with_partners:
         if thing[len(thing) - 1:len(thing)] == '+':
             sum_val = sum_val + ag * retreive_model_value(thing[0:len(thing) -1])
@@ -86,7 +112,10 @@ def sigma_function_new_value(ar, ag, nodes, key_with_partners, value_old):
     return return_val
 
 #runs a single generation update
-def run_a_generation_sigma(ar, ag, nodes, key_with_partners, generaton_numb):
+def run_a_generation_sigma(ar_n, ag_g, nodes generaton_numb):
+    ar_n = raw_input("Enter ar value: ")
+    ag_n = raw_input("Enter ag value: ")
+    global key_with_partners
     past_states[generaton_numb] = current_state
     current_value_store = 0
     #now update
@@ -116,6 +145,29 @@ def draw_the_graph(y):
         pos = nx.circular_layout(y)
         colors = [y[u][v]['color'] for u,v in edges]
         nx.draw(y, pos, edges=edges, edge_color=colors, with_labels = True)
+
+def split_node_history_and_graph(past_gen_data):
+    domain = len(past_gen_data)
+    dom = []
+    broken_by_nodes = {}
+    for i in range(domain):
+        dom.append(i)
+    global node_names
+    for a in node_names:
+        broken_by_nodes[a] = []
+    print broken_by_nodes
+    for thing in past_gen_data:
+        print thing
+        for a in range(len(past_gen_data[thing])):
+            broken_by_nodes[node_names[a]].append(past_gen_data[thing][a])
+    for b in range(len(node_names)):
+        plt.figure(b)
+        plt.plot(broken_by_nodes[node_names[b]])
+        plt.title(node_names[b])
+        name = node_names[b] + 'node_state_history'
+        plt.savefig(name)
+        plt.show()
+        plt.close()
 
 #UNFINISHED TRUTH TABLE STUFF
 #making truth tables to keep while running simulations
