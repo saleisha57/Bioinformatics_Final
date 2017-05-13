@@ -35,7 +35,45 @@ def assign_all_things(read_stuff_list):
         ag = read_stuff_list[location_model_type][1]
         ar = read_stuff_list[location_model_type+1][1]
     else:
+        placeholder = 0
         #figure out truth table export import once working
+
+
+def file_output_model(name):
+    x = open(name+'.txt', 'w')
+    global nodes
+    global key_with_partners
+    global m_type
+    for thing in nodes:
+        x.write( thing+ " ")
+    x.write( "\n")
+    for thing in nodes:
+        for thing_2 in nodes[thing]:
+            x.write( thing_2)
+            x.write('\n')
+    for thing in key_with_partners:
+        for thing_2 in key_with_partners[thing]:
+            x.write( thing_2)
+            x.write('\n')
+    x.write( m_type)
+    x.write('\n')
+    if (m_type == 'sigma'):
+        global ar
+        global ag
+        x.write( 'ag ')
+        x.write(ag)
+        x.write('\n')
+        x.write( 'ar ')
+        x.write(ar)
+        x.write('\n')
+    else:
+        #put truth table thing here once working
+        placeholder=0
+    print ' '
+    x.close()
+
+
+
 
 
 try_open = open_old_model('format_old_model')
@@ -46,3 +84,4 @@ print key_with_partners
 print m_type
 print ag
 print ar
+file_output_model('test_run_model_out')
