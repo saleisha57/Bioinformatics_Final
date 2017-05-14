@@ -29,3 +29,6 @@ http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0050008#s4 
 
 http://www.cell.com/cell/pdf/S0092-8674(15)00431-6.pdf (another transcription network review)
 
+
+https://github.com/tr3buchet/truths/blob/master/truths/truths.py (Truth Tables GitHub)
+
