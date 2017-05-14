@@ -1,0 +1,32 @@
+(R)-reticuline (S)-3-hydroxy-N-methylcoclaurine (S)-N-methylcoclaurine (S)-coclaurine (S)-norcoclaurine (S)-reticuline 4-hydroxyphenyl-acetaldehyde 4-hydroxyphenyl-pyruvate L-tyrosine codeinone hydracodone salularidine salularidinol thebaine
+salularidine+
+(S)-reticuline+
+(S)-3-hydroxy-N-methylcoclaurine+
+(S)-N-methylcoclaurine+
+(S)-coclaurine+
+(R)-reticuline+
+(S)-norcoclaurine+
+4-hydroxyphenyl-acetaldehyde+
+4-hydroxyphenyl-pyruvate+
+hydracodone+
+
+salularidinol+
+thebaine+
+codeinone+
+(S)-reticuline+
+(S)-N-methylcoclaurine+
+(S)-coclaurine+
+(S)-norcoclaurine+
+4-hydroxyphenyl-acetaldehyde+
+(S)-3-hydroxy-N-methylcoclaurine+
+4-hydroxyphenyl-pyruvate+
+L-tyrosine+
+
+
+codeinone+
+(R)-reticuline+
+salularidine+
+salularidinol+
+sigma
+ag 2
+ar -1

@@ -123,7 +123,7 @@ def assign_all_things(read_stuff_list):
     for thing in range(len(read_stuff_list[0])):
         nodes[read_stuff_list[0][thing]] = read_stuff_list[thing + 1]
         node_names_hold.append(read_stuff_list[0][thing])
-        key_with_partners[read_stuff_list[0][thing]] = read_stuff_list[thing + len(read_stuff_list[0]) + 1]
+        #key_with_partners[read_stuff_list[0][thing]] = read_stuff_list[thing + len(read_stuff_list[0]) + 1]
     location_model_type = len(read_stuff_list[0]) * 2 + 1
     #print location_model_type
     node_names_hold.sort()
@@ -155,10 +155,10 @@ def file_output_model(name):
         for thing_2 in nodes[thing]:
             x.write( thing_2 + " "),
         x.write('\n')
-    for thing in node_names:
-        for thing_2 in key_with_partners[thing]:
-            x.write( thing_2+ " "),
-        x.write('\n')
+    # for thing in node_names:
+    #     for thing_2 in key_with_partners[thing]:
+    #         x.write( thing_2+ " "),
+    #     x.write('\n')
     x.write( m_type)
     x.write('\n')
     if (m_type == 'sigma'):
@@ -204,7 +204,7 @@ def find_all_nodes_with_point_to_a_node():
     key_with_partners = give_back_list_friends
 
 #does a signma update scheme
-def sigma_function_new_value(value_old, c_state):
+def sigma_function_new_value(value_old, c_state, target):
     #print 'inside sigma function'
     sum_val = 0
     global ar
@@ -212,25 +212,23 @@ def sigma_function_new_value(value_old, c_state):
     global nodes
     global key_with_partners
     global node_names
+    thing = target
     #global current_state
-    for thing in node_names:
-        print thing, 'key'
-        #print 'on key', thing
-        for thing_2 in key_with_partners[thing]:
-            #print 'on box', thing_2
-            print thing_2, 'inside'
-            print thing_2[0:len(thing_2) -1]
-            print node_names.index(thing_2[0:len(thing_2) -1])
-            if thing_2[len(thing_2) - 1:len(thing_2)] == '+':
-                #print current_state[node_names.index(thing_2[0:len(thing_2) -1])], 'value in current_state'
-                #print int(ag) * int(current_state[node_names.index(thing_2[0:len(thing_2) -1])]), 'times '
-                sum_val = sum_val + int(ag) * int(c_state[node_names.index(thing_2[0:len(thing_2) -1])])
-                #print sum_val, sum_val
-                #print sum_val
-                #print 'entered'
-            else:
-                sum_val = sum_val + int(ar) * int(c_state[node_names.index(thing_2[0:len(thing_2)-1])])
-
+    for thing_2 in key_with_partners[thing]:
+        #print 'on box', thing_2
+        print thing_2, 'inside'
+        if thing_2[len(thing_2) - 1:len(thing_2)] == '+':
+            print 'entered the plus one'
+            #print current_state[node_names.index(thing_2[0:len(thing_2) -1])], 'value in current_state'
+            #print int(ag) * int(current_state[node_names.index(thing_2[0:len(thing_2) -1])]), 'times '
+            sum_val = sum_val + int(ag) * int(c_state[node_names.index(thing_2[0:len(thing_2) -1])])
+            #print sum_val, sum_val
+            #print sum_val
+            #print 'entered'
+        elif thing_2[len(thing_2)-1:len(thing_2)] == '-':
+            sum_val = sum_val + int(ar) * int(c_state[node_names.index(thing_2[0:len(thing_2)-1])])
+        else:
+            sum_val = 0
     #print sum_val, 'after updates'
     if sum_val > 0:
         #print 'tis true greater than'
@@ -252,15 +250,15 @@ def run_a_generation_sigma(generaton_numb, c_state):
     #now update
     global node_names
     hold_states = []
-    print len(node_names), 'should b 3'
-    print len(c_state), 'current state length'
     for i in range(len(node_names)):
         current_value_store = c_state[i]
+        print 'current value', c_state[i]
         #print 'current state for node', i, 'is', current_value_store
         #print sigma_function_new_value(current_value_store), 'actually got from sigma'
-        hold_states.append(sigma_function_new_value(current_value_store, c_state))
+        hold_states.append(sigma_function_new_value(current_value_store, c_state, node_names[i]))
         #print hold_states, 'hold states'
     #print hold_states, 'hold states has'
+    print hold_states
     return hold_states
     #print 'hold states', hold_states, 'current_state', current_state
 
@@ -282,8 +280,20 @@ def run_set_number_generations_sigma(number, initial_values):
     global past_states
     past_states=  past_states_r
 
-get_edges()
-set_model_type()
+x = open_old_model('MIA_pathway_fixed')
+assign_all_things(x)
+find_all_nodes_with_point_to_a_node()
 print node_names
-run_set_number_generations_sigma(10, [0,0,0,0,0,0,0,0,1,0,0,0,0,0])
+for thing in node_names:
+    print 'on node', thing
+    print 'points too', nodes[thing]
+    print 'pointed too by ', key_with_partners[thing]
+    print '\n'
+run_set_number_generations_sigma(16, [0,0,0,0,0,0,0,0,1,0,0,0,0,0])
+for i in range(len(past_states)):
+    print 'generation', i
+    for j in range(len(past_states[i])):
+        print node_names[j], 'state', past_states[i][j]
+y = translate_to_graph()
+draw_the_graph(y)
 split_node_history_and_graph(past_states)
