@@ -88,6 +88,10 @@ def draw_the_graph(y):
         pos = nx.circular_layout(y)
         colors = [y[u][v]['color'] for u,v in edges]
         nx.draw(y, pos, edges=edges, edge_color=colors, with_labels = True)
+        name = 'graph_of_nodes'
+        plt.show()
+        plt.savefig(name)
+        plt.close()
 
 def split_node_history_and_graph(past_gen_data):
     domain = len(past_gen_data)
@@ -107,10 +111,8 @@ def split_node_history_and_graph(past_gen_data):
         plt.figure(b)
         plt.plot(broken_by_nodes[node_names[b]])
         plt.title(node_names[b])
-        name = node_names[b] + 'node_state_history'
-        plt.savefig(name)
+        #Need to manually save graph as you go along
         plt.show()
-        plt.close()
 
 def assign_all_things(read_stuff_list):
     #assigns main nodes, edges out of node
@@ -201,14 +203,14 @@ def find_all_nodes_with_point_to_a_node():
     key_with_partners = give_back_list_friends
 
 #does a signma update scheme
-def sigma_function_new_value(value_old):
+def sigma_function_new_value(value_old, c_state):
     #print 'inside sigma function'
     sum_val = 0
     global ar
     global ag
     global nodes
     global key_with_partners
-    global current_state
+    #global current_state
     for thing in key_with_partners:
         #print 'on key', thing
         for thing_2 in key_with_partners[thing]:
@@ -216,12 +218,12 @@ def sigma_function_new_value(value_old):
             if thing_2[len(thing_2) - 1:len(thing_2)] == '+':
                 #print current_state[node_names.index(thing_2[0:len(thing_2) -1])], 'value in current_state'
                 #print int(ag) * int(current_state[node_names.index(thing_2[0:len(thing_2) -1])]), 'times '
-                sum_val = sum_val + int(ag) * int(current_state[node_names.index(thing_2[0:len(thing_2) -1])])
+                sum_val = sum_val + int(ag) * int(c_state[node_names.index(thing_2[0:len(thing_2) -1])])
                 #print sum_val, sum_val
                 #print sum_val
                 #print 'entered'
             else:
-                sum_val = sum_val + int(ar) * int(current_state[node_names.index(thing_2[0:len(thing_2)-1])])
+                sum_val = sum_val + int(ar) * int(c_state[node_names.index(thing_2[0:len(thing_2)-1])])
 
     #print sum_val, 'after updates'
     if sum_val > 0:
@@ -238,48 +240,45 @@ def sigma_function_new_value(value_old):
 
 #runs a single generation update
 #problem is in HERE
-def run_a_generation_sigma(generaton_numb, past_states_r):
-    print 'inside run one generation'
-    global current_state
-    state_store = current_state
-    past_states_r[generaton_numb] = state_store
-    print past_states_r
+def run_a_generation_sigma(generaton_numb, c_state):
+    #print 'inside run one generation'
+    #print past_states_r
     #now update
     global node_names
     hold_states = []
-    #print len(node_names), 'should b 3'
+    print len(node_names), 'should b 3'
+    print len(c_state), 'current state length'
     for i in range(len(node_names)):
-        current_value_store = current_state[i]
+        current_value_store = c_state[i]
         #print 'current state for node', i, 'is', current_value_store
         #print sigma_function_new_value(current_value_store), 'actually got from sigma'
-        hold_states.append(sigma_function_new_value(current_value_store))
-        print hold_states, 'hold states'
+        hold_states.append(sigma_function_new_value(current_value_store, c_state))
+        #print hold_states, 'hold states'
     #print hold_states, 'hold states has'
-    for j in range(len(hold_states)):
-        current_state[j] = hold_states[j]
-    return past_states_r
+    return hold_states
     #print 'hold states', hold_states, 'current_state', current_state
 
 def run_set_number_generations_sigma(number, initial_values):
-    global current_state
     #print 'inside main function'
-    current_state = initial_values
-    global past_states
     past_states_r = {}
     past_states_r[0] = initial_values
-    for i in range(0, number):
+    print past_states_r
+    c_state = initial_values
+    for i in range(1, number):
         #print current_state
-        b = run_a_generation_sigma(i, past_states_r)
+        print 'generation ', i
+        print 'current state is:', c_state
+        b = run_a_generation_sigma(i, c_state)
         print b, 'b'
-        past_states_r = b
-    past_states = past_states_r
+        c_state = b
+        #add in shut offs here
+        past_states_r[i] = c_state
+    global past_states
+    past_states=  past_states_r
 
 x = open_old_model('5_13_testrun')
 assign_all_things(x)
-print nodes
-print key_with_partners
+y = translate_to_graph()
+draw_the_graph(y)
 run_set_number_generations_sigma(10, [1,0,0])
-print past_states
-print ar
-print ag
-print 'node_names', node_names
+split_node_history_and_graph(past_states)
