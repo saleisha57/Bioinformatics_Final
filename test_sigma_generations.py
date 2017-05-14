@@ -145,16 +145,17 @@ def assign_all_things(read_stuff_list):
 def file_output_model(name):
     x = open(name+'.txt', 'w')
     global nodes
+    global node_names
     global key_with_partners
     global m_type
-    for thing in nodes:
+    for thing in node_names:
         x.write( thing+ " ")
     x.write( "\n")
-    for thing in nodes:
+    for thing in node_names:
         for thing_2 in nodes[thing]:
             x.write( thing_2 + " "),
         x.write('\n')
-    for thing in key_with_partners:
+    for thing in node_names:
         for thing_2 in key_with_partners[thing]:
             x.write( thing_2+ " "),
         x.write('\n')
@@ -210,11 +211,16 @@ def sigma_function_new_value(value_old, c_state):
     global ag
     global nodes
     global key_with_partners
+    global node_names
     #global current_state
-    for thing in key_with_partners:
+    for thing in node_names:
+        print thing, 'key'
         #print 'on key', thing
         for thing_2 in key_with_partners[thing]:
             #print 'on box', thing_2
+            print thing_2, 'inside'
+            print thing_2[0:len(thing_2) -1]
+            print node_names.index(thing_2[0:len(thing_2) -1])
             if thing_2[len(thing_2) - 1:len(thing_2)] == '+':
                 #print current_state[node_names.index(thing_2[0:len(thing_2) -1])], 'value in current_state'
                 #print int(ag) * int(current_state[node_names.index(thing_2[0:len(thing_2) -1])]), 'times '
@@ -276,9 +282,8 @@ def run_set_number_generations_sigma(number, initial_values):
     global past_states
     past_states=  past_states_r
 
-x = open_old_model('5_13_testrun')
-assign_all_things(x)
-y = translate_to_graph()
-draw_the_graph(y)
-run_set_number_generations_sigma(10, [1,0,0])
+get_edges()
+set_model_type()
+print node_names
+run_set_number_generations_sigma(10, [0,0,0,0,0,0,0,0,1,0,0,0,0,0])
 split_node_history_and_graph(past_states)
