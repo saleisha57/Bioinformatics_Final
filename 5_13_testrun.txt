@@ -1,0 +1,10 @@
+a c b
+b+ c+
+a- b-
+a+
+c- b+
+a+
+a+ c-
+sigma
+ag 2
+ar -1

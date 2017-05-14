@@ -112,21 +112,18 @@ def sigma_function_new_value(value_old):
     return return_val
 
 #runs a single generation update
-def run_a_generation_sigma(ar_n, ag_g, nodes generaton_numb):
-    ar_n = raw_input("Enter ar value: ")
-    ag_n = raw_input("Enter ag value: ")
-    global key_with_partners
+def run_a_generation_sigma(generaton_numb):
     past_states[generaton_numb] = current_state
     current_value_store = 0
     #now update
     for thing in nodes:
         current_value_store = current_state[thing]
-        current_state[thing] = sigma_function_new_value(ar, ag, nodes, key_with_partners, current_value_store)
+        current_state[thing] = sigma_function_new_value(current_value_store)
 
-def run_set_number_generations_sigma(number, ar, ag, nodes, key_with_partners, intial_values):
+def run_set_number_generations_sigma(number, intial_values):
     current_state = initial_values
     for i in range(number):
-        run_a_generation_sigma(ar, ag, nodes, key_with_partners, i)
+        run_a_generation_sigma(i)
     #need output stuff
 
 #MENY AND FILE I/O STUFF
