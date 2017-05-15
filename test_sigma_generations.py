@@ -255,7 +255,10 @@ def run_a_generation_sigma(generaton_numb, c_state):
         print 'current value', c_state[i]
         #print 'current state for node', i, 'is', current_value_store
         #print sigma_function_new_value(current_value_store), 'actually got from sigma'
-        hold_states.append(sigma_function_new_value(current_value_store, c_state, node_names[i]))
+        new_val = sigma_function_new_value(current_value_store, c_state, node_names[i])
+        if c_state[i] == 2:
+            new_val = 2
+        hold_states.append(new_val)
         #print hold_states, 'hold states'
     #print hold_states, 'hold states has'
     print hold_states
@@ -280,8 +283,9 @@ def run_set_number_generations_sigma(number, initial_values):
     global past_states
     past_states=  past_states_r
 
-x = open_old_model('MIA_pathway_fixed')
-assign_all_things(x)
+
+get_edges()
+set_model_type()
 find_all_nodes_with_point_to_a_node()
 print node_names
 for thing in node_names:
@@ -289,11 +293,12 @@ for thing in node_names:
     print 'points too', nodes[thing]
     print 'pointed too by ', key_with_partners[thing]
     print '\n'
-run_set_number_generations_sigma(16, [0,0,0,0,0,0,0,0,1,0,0,0,0,0])
-for i in range(len(past_states)):
-    print 'generation', i
-    for j in range(len(past_states[i])):
-        print node_names[j], 'state', past_states[i][j]
-y = translate_to_graph()
-draw_the_graph(y)
-split_node_history_and_graph(past_states)
+
+# run_set_number_generations_sigma(16, [0,0,0,0,0,0,0,0,1,0,0,0,0,0])
+# for i in range(len(past_states)):
+#     print 'generation', i
+#     for j in range(len(past_states[i])):
+#         print node_names[j], 'state', past_states[i][j]
+# y = translate_to_graph()
+# draw_the_graph(y)
+# split_node_history_and_graph(past_states)
